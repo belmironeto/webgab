@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    zIndex: theme.zIndex.drawer + 1,
+
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
