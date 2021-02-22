@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,7 +27,7 @@ const iconsMap = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none',
     },
   },
@@ -53,8 +53,16 @@ export default function MenuLateral() {
     { name: 'ips', id: 3, desciption: 'IPs' },
     { name: 'certificados', id: 4, desciption: 'Certificados' },
   ];
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   return (
-    <div>
+    <div className={classes.root}>
       <Drawer
         className={classes.drawer}
         variant="permanent"

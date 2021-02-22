@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    zIndex: theme.zIndex.drawer + 1,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   passageiros: {
     backgroundColor: 'firebrick',
@@ -39,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   buttonRed: {
     backgroundColor: '#f44336',
     color: 'white',
+
     '&:hover, &:focus buttonRed': {
       backgroundColor: '#FF0033',
       color: 'black',
@@ -46,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonGreen: {
     backgroundColor: '#4CAF50',
+
     color: 'white',
     '&:hover, &:focus buttonRed': {
       backgroundColor: '#00FF00',
@@ -54,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonBlue: {
     backgroundColor: '#008CBA',
+
     color: 'white',
     '&:hover, &:focus buttonRed': {
       backgroundColor: '#008C',
