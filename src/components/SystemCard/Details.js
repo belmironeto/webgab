@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    marginLeft: theme.spacing(2),
+    maxWidth: '500px',
   },
   textArea: {
     marginLeft: theme.spacing(1),

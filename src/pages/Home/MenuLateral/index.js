@@ -26,7 +26,11 @@ const iconsMap = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
   drawer: {
     flexShrink: 0,
     backgroundColor: 'red',
@@ -50,7 +54,7 @@ export default function MenuLateral() {
     { name: 'certificados', id: 4, desciption: 'Certificados' },
   ];
   return (
-    <>
+    <div>
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -78,6 +82,6 @@ export default function MenuLateral() {
           <Divider />
         </div>
       </Drawer>
-    </>
+    </div>
   );
 }

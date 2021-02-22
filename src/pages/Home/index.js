@@ -21,10 +21,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
+
   content: {
     flexGrow: 1,
     marginTop: '64px',
@@ -38,7 +35,7 @@ export default function Home() {
     <div className={classes.root}>
       <CssBaseline />
       <Header />
-      <MenuLateral className={classes.drawer} />
+      <MenuLateral />
       <main className={classes.content}>
         <SystemCard />
       </main>
