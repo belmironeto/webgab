@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,6 +14,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+
+import { SystemContext } from '../../context/SystemContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,8 +74,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Lista() {
+const corDivisao = {
+  passageiros: 'firebrick',
+  logistica: 'green',
+  comercio: 'darkblue',
+  gab: 'darkorange',
+};
+export default function Lista(sist) {
+  const sistemas = sist?.sistema;
+
   const classes = useStyles();
+
+  const ctx = useContext(SystemContext);
+  const {
+    name,
+    setName,
+    setDescription,
+    divisao,
+    setUrl,
+    setEnvironment,
+  } = ctx;
+
+  const [selectedSystem, setSelectedSystem] = useState(null);
+
+  const handleListItemClick = (system, index) => {
+    setSelectedSystem(index);
+    setName(system.name);
+    setDescription(system.description);
+    setEnvironment(system.environment);
+    setUrl(system.url);
+  };
+
   return (
     <Box className={classes.root}>
       <ButtonGroup>
@@ -107,22 +138,25 @@ export default function Lista() {
         </Button>
       </ButtonGroup>
       <List component="nav">
-        <ListItem button selected>
-          <Avatar className={classes.passageiros}>P</Avatar>
-          <ListItemText primary="TotalBus" />
-        </ListItem>
-        <ListItem button>
-          <Avatar className={classes.logistica}>L</Avatar>
-          <ListItemText primary="Benner" />
-        </ListItem>
-        <ListItem button>
-          <Avatar className={classes.comercio}>C</Avatar>
-          <ListItemText primary="Sisdia" />
-        </ListItem>
-        <ListItem button>
-          <Avatar className={classes.gab}>G</Avatar>
-          <ListItemText primary="SAP" />
-        </ListItem>
+        {sistemas?.map((sistema, index) => {
+          return (
+            <ListItem
+              button
+              selected={selectedSystem === index}
+              onClick={() => handleListItemClick(sistema, index)}
+              key={sistema.name}
+            >
+              <Avatar
+                alt={sistema.divisao}
+                style={{
+                  background: corDivisao[sistema.divisao],
+                  margin: '5px',
+                }}
+              />
+              <ListItemText primary={sistema.name} />
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );

@@ -9,8 +9,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <GuestRoute path="/sistemas" element={<Sistemas />} />
-        <Route path="//*" element={<Home />} />
+        <Route path="/*" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

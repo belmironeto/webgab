@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    width: '600px',
   },
   textArea: {
     marginLeft: theme.spacing(1),
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+    maxWidth: '500px',
   },
   paper: {
     marginRight: theme.spacing(1),
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Ambiente({ environment }) {
+export default function Ambiente({ amb }) {
   const corAmbiente = {
     PRD: 'darkOrange',
     HMG: 'forestGreen',
@@ -44,14 +46,15 @@ export default function Ambiente({ environment }) {
   };
 
   const classes = useStyles();
+
   return (
     <Paper
       className={classes.areas}
-      style={{ backgroundColor: corAmbiente[environment.ambiente] }}
+      style={{ backgroundColor: corAmbiente[amb.name] }}
     >
       <FormControl className={classes.areas}>
         <InputLabel>Ambiente</InputLabel>
-        <NativeSelect defaultValue={environment.ambiente}>
+        <NativeSelect defaultValue={amb.name}>
           <option value="PRD">PRD</option>
           <option value="HMG">HMG</option>
           <option value="DEV">DEV</option>
@@ -60,32 +63,33 @@ export default function Ambiente({ environment }) {
 
       <FormControl className={classes.areas}>
         Servidores
-        {environment.servers.map((servidor) => (
+        {amb.servers.map((server) => (
           <Button
             variant="outlined"
-            key={`item-${servidor.id}-${servidor.name}`}
+            key={server.toString()}
             className={classes.servidores}
           >
-            {servidor.name}
+            {server}
           </Button>
         ))}
       </FormControl>
 
       <FormControl className={classes.areas}>
         <InputLabel>Banco de Dados</InputLabel>
-        <NativeSelect defaultValue={environment.banco.tipo}>
+        <NativeSelect defaultValue={amb.banco.type}>
           <option value="oracle">Oracle</option>
           <option value="sqlserver">SQL Server</option>
           <option value="informix">Informix</option>
         </NativeSelect>
         <TextField
           label="Nome do Banco de Dados"
-          defaultValue={environment.banco.name}
+          multiline
+          defaultValue={amb.banco.name}
           className={classes.textArea}
         />
         <TextField
           label="Nome do usuário do BD"
-          defaultValue={environment.banco.user}
+          defaultValue={amb.banco.user}
           className={classes.textArea}
         />
       </FormControl>

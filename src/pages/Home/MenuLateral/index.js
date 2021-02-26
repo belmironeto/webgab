@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   icon: {},
 }));
 
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
+
 export default function MenuLateral() {
   const classes = useStyles();
   const itens = [
@@ -61,6 +65,9 @@ export default function MenuLateral() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleButtonSistemas = () => {};
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -76,14 +83,14 @@ export default function MenuLateral() {
             {itens.map((item) => {
               const Icon = iconsMap[item.name];
               return (
-                <ListItem button key={item.id}>
+                <ListItemLink href={item.name} key={item.id}>
                   <ListItemIcon>
                     <SvgIcon className={classes.icon}>
                       <Icon />
                     </SvgIcon>
                   </ListItemIcon>
                   <ListItemText primary={item.desciption} />
-                </ListItem>
+                </ListItemLink>
               );
             })}
           </List>
