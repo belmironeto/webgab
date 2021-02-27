@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
-import { useSelector, useDispatch } from 'react-redux';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import { SystemContext } from '../../context/SystemContext';
+import Button from '@material-ui/core/Button';
 
 import Ambiente from './Ambiente';
 
@@ -21,12 +25,31 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     width: '50ch',
     textAlign: 'justify',
+    flexGrow: 1,
+  },
+  tags: {
+    flexDirection: 'row',
   },
   servidor: { marginRight: theme.spacing(1) },
+  Tag: {
+    textTransform: 'none',
+    marginTop: 0,
+  },
+  TagTitle: {
+    fontSize: '1rem',
+    fontWeight: 400,
+    transform: 'translate(0.5px) scale(0.75)',
+    top: 0,
+    left: 0,
+    transformOrigin: 'top left',
+    color: 'rgba(0,0,0,0.54)',
+    marginTop: theme.spacing(1),
+    marginBottom: 0,
+  },
 }));
 
-export default function Details(sist) {
-  const sistema = sist.sistema;
+export default function Details() {
+  //const sistema = sist.sistema;
 
   const classes = useStyles();
   const ctx = useContext(SystemContext);
@@ -34,12 +57,17 @@ export default function Details(sist) {
     name,
     setName,
     url,
-    setUrl,
     description,
     setDescription,
     environment,
-    setEnvironment,
+    tags,
+    setPesquisa,
   } = ctx;
+
+  const handleTagSelection = (item) => {
+    item = item.target.innerHTML.substring(1, item.length);
+    setPesquisa(item);
+  };
 
   return (
     <Container>
@@ -73,7 +101,16 @@ export default function Details(sist) {
             readOnly: true,
           }}
         />
-
+        <Box className={classes.tags}>
+          <div className={classes.TagTitle}>TAGs</div>
+          {tags.map((item) => (
+            <Button
+              key={item}
+              className={classes.Tag}
+              onClick={handleTagSelection}
+            >{`#${item}`}</Button>
+          ))}
+        </Box>
         {environment?.map((ambiente) => {
           return <Ambiente amb={ambiente} key={ambiente._id} />;
         })}

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,6 +14,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getSystemsByTAG } from '../../actions/sistemasActions';
 
 import { SystemContext } from '../../context/SystemContext';
 
@@ -43,29 +46,29 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   buttonRed: {
-    backgroundColor: '#f44336',
+    backgroundColor: '#ef9a9a',
     color: 'white',
 
     '&:hover, &:focus buttonRed': {
-      backgroundColor: '#FF0033',
+      backgroundColor: '#f44336',
       color: 'black',
     },
   },
   buttonGreen: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#a5d6a7',
 
     color: 'white',
     '&:hover, &:focus buttonRed': {
-      backgroundColor: '#00FF00',
+      backgroundColor: '#4caf50',
       color: 'black',
     },
   },
   buttonBlue: {
-    backgroundColor: '#008CBA',
+    backgroundColor: '#90caf9',
 
     color: 'white',
     '&:hover, &:focus buttonRed': {
-      backgroundColor: '#008C',
+      backgroundColor: '#2196f3',
       color: 'black',
     },
   },
@@ -80,10 +83,9 @@ const corDivisao = {
   comercio: 'darkblue',
   gab: 'darkorange',
 };
-export default function Lista(sist) {
-  const sistemas = sist?.sistema;
-
+export default function Lista() {
   const classes = useStyles();
+  const sistemas = useSelector((state) => state.sistemas).sistemas;
 
   const ctx = useContext(SystemContext);
   const {
@@ -93,7 +95,17 @@ export default function Lista(sist) {
     divisao,
     setUrl,
     setEnvironment,
+    setPesquisa,
+    pesquisa,
+
+    tags,
+    setTags,
   } = ctx;
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSystemsByTAG(pesquisa));
+  }, [dispatch, pesquisa]);
 
   const [selectedSystem, setSelectedSystem] = useState(null);
 
@@ -103,25 +115,40 @@ export default function Lista(sist) {
     setDescription(system.description);
     setEnvironment(system.environment);
     setUrl(system.url);
+    setTags(system.tags);
+  };
+
+  const handleTypeSearch = (event) => {
+    setPesquisa(event.target.value);
   };
 
   return (
     <Box className={classes.root}>
       <ButtonGroup>
-        <Button className={classes.buttonGreen}>
+        <Button
+          variant="contained"
+          disableElevation
+          className={classes.buttonGreen}
+        >
           <SvgIcon>
             <AddIcon />
           </SvgIcon>
         </Button>
 
-        <Button className={classes.buttonBlue}>
+        <Button
+          className={classes.buttonBlue}
+          variant="contained"
+          disableElevation
+        >
           <SvgIcon>
             <EditIcon />
           </SvgIcon>
         </Button>
-        <Button>
+        <Button variant="contained" disableElevation>
           <TextField
             className={classes.searchButton}
+            value={pesquisa}
+            onChange={handleTypeSearch}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -131,7 +158,11 @@ export default function Lista(sist) {
             }}
           />
         </Button>
-        <Button className={classes.buttonRed}>
+        <Button
+          className={classes.buttonRed}
+          variant="contained"
+          disableElevation
+        >
           <SvgIcon>
             <DeleteIcon />
           </SvgIcon>
@@ -144,16 +175,16 @@ export default function Lista(sist) {
               button
               selected={selectedSystem === index}
               onClick={() => handleListItemClick(sistema, index)}
-              key={sistema.name}
+              key={sistema?.name}
             >
               <Avatar
-                alt={sistema.divisao}
+                alt={sistema?.divisao}
                 style={{
-                  background: corDivisao[sistema.divisao],
+                  background: corDivisao[sistema?.divisao],
                   margin: '5px',
                 }}
               />
-              <ListItemText primary={sistema.name} />
+              <ListItemText primary={sistema?.name} />
             </ListItem>
           );
         })}

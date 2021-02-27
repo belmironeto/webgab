@@ -9,9 +9,14 @@ export function SystemProvider({ children }) {
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const [environment, setEnvironment] = useState([]);
+  const [pesquisa, setPesquisa] = useState('');
 
   const handleNameChange = (event) => {
     setName(event);
+  };
+
+  const handlePesquisaChange = (event) => {
+    setPesquisa(event);
   };
 
   return (
@@ -29,6 +34,8 @@ export function SystemProvider({ children }) {
         setEnvironment,
         tags,
         setTags,
+        pesquisa,
+        setPesquisa: handlePesquisaChange,
       }}
     >
       {children}

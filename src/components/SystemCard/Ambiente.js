@@ -36,13 +36,22 @@ const useStyles = makeStyles((theme) => ({
   servidores: {
     marginTop: theme.spacing(1),
   },
+  ServerTitle: {
+    fontSize: '1rem',
+    fontWeight: 400,
+    transform: 'translate(0.5px) scale(0.75)',
+    top: 0,
+    left: 0,
+    transformOrigin: 'top left',
+    color: 'rgba(0,0,0,0.54)',
+  },
 }));
 
 export default function Ambiente({ amb }) {
   const corAmbiente = {
-    PRD: 'darkOrange',
-    HMG: 'forestGreen',
-    DEV: 'lightPink',
+    PRD: '#a5d6a7',
+    HMG: '#ffb74d',
+    DEV: '#e0e0e0',
   };
 
   const classes = useStyles();
@@ -62,7 +71,7 @@ export default function Ambiente({ amb }) {
       </FormControl>
 
       <FormControl className={classes.areas}>
-        Servidores
+        <div className={classes.ServerTitle}>Servidores</div>
         {amb.servers.map((server) => (
           <Button
             variant="outlined"

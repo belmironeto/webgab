@@ -30,7 +30,7 @@ export default function SystemCard() {
   return (
     <Box className={classes.root}>
       <Box className={classes.sistema}>
-        <Details sistema={sist[0]} />
+        <Details />
       </Box>
     </Box>
   );
